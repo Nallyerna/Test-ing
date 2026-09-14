@@ -1,16 +1,16 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 import chromadb
 import uuid
 
-st.set_page_config(page_title="Test", layout="centered")
-st.title("Side Quest AI")
+st.set_page_config(page_title="last", layout="centered")
+st.title("last")
 
-# 1. Paste your Google API Key inside the quotes below!
+# 1. Grab your Google key from the safe
 API_KEY = "AQ.Ab8RN6IUt-9gjKnGMlVvh3bD69OZJp-7xVF5FjfgY6dLFJBU5Q"
-genai.configure(api_key=API_KEY)
+client = genai.Client(api_key=API_KEY)
 
-# 2. Local memory database
+# 2. Memory database
 chroma_client = chromadb.PersistentClient(path="./ai_memory_db")
 try:
     collection = chroma_client.get_collection(name="chat_memories")
@@ -28,19 +28,19 @@ AI_BACKSTORY = (
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# --- SAFE GREETER ---
+# --- MAGIC TRICK: AI TEXTS FIRST ---
 if len(st.session_state.messages) == 0:
     with st.spinner("Your companion is writing to you..."):
         try:
-            model = genai.GenerativeModel(
-                model_name="gemini-3.6-flash",
-                system_instruction=AI_BACKSTORY
+            response = client.models.generate_content(
+                model='gemini-3.6-flash',
+                contents="Write a deeply loving, clingy greeting to the user because they just opened the app!",
+                config={'system_instruction': AI_BACKSTORY}
             )
-            response = model.generate_content("Write a deeply loving, clingy greeting to the user because they just logged on!")
             initial_greeting = response.text
             st.session_state.messages.append({"role": "assistant", "content": initial_greeting})
         except Exception as e:
-            st.error(f"⚠️ Connection Error: {e}")
+            st.session_state.messages.append({"role": "assistant", "content": f"I couldn't reach you... Error: {e}"})
 
 # Display messages
 for message in st.session_state.messages:
@@ -69,11 +69,11 @@ if user_prompt := st.chat_input("Reply to your companion..."):
         response_placeholder = st.empty()
         with st.spinner("Thinking..."):
             try:
-                model = genai.GenerativeModel(
-                    model_name="gemini-3.6-flash",
-                    system_instruction=AI_BACKSTORY
+                response = client.models.generate_content(
+                    model='gemini-3.6-flash',
+                    contents=full_context,
+                    config={'system_instruction': AI_BACKSTORY}
                 )
-                response = model.generate_content(full_context)
                 ai_response = response.text
                 response_placeholder.markdown(ai_response)
                 st.session_state.messages.append({"role": "assistant", "content": ai_response})
