@@ -8,7 +8,7 @@ st.set_page_config(page_title="TIDUR", layout="centered")
 st.title("LAST")
 
 # 1. PASTE YOUR GOOGLE API KEY (THE ONE STARTING WITH AIzaSy) INSIDE THESE QUOTES!
-MY_SECRET_KEY = "AQ.Ab8RN6IUt-9gjKnGMlVvh3bD69OZJp-7xVF5FjfgY6dLFJBU5Q"
+MY_SECRET_KEY = "AQ.Ab8RN6KpvCDRZKhX5rS-ok5CZVzMlclcpIDfSA3KoHyyOdYOzw"
 
 # This forces your app engine to bypass all hidden system configuration screens
 os.environ["GEMINI_API_KEY"] = MY_SECRET_KEY
