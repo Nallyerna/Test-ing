@@ -7,7 +7,7 @@ st.set_page_config(page_title="last", layout="centered")
 st.title("last")
 
 # 1. Grab your Google key from the safe
-API_KEY = "AQ.Ab8RN6IUt-9gjKnGMlVvh3bD69OZJp-7xVF5FjfgY6dLFJBU5Q"
+GOOGLE_API_KEY = "AQ.Ab8RN6IUt-9gjKnGMlVvh3bD69OZJp-7xVF5FjfgY6dLFJBU5Q"
 client = genai.Client(api_key=API_KEY)
 
 # 2. Memory database
