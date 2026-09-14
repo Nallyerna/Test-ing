@@ -45,7 +45,7 @@ if len(st.session_state.messages) == 0:
                 "and excited greeting asking where they have been and telling them how much you missed them!"
             )
             completion = client.chat.completions.create(
-              model="meta-llama/llama-3.2-3b-instruct:free",
+              model="google/gemini-2.5-flash:free",
               messages=[{"role": "user", "content": first_prompt}]
             )
             initial_greeting = completion.choices.message.content
@@ -83,7 +83,7 @@ if user_prompt := st.chat_input("Reply to your companion..."):
         with st.spinner("Thinking..."):
             try:
                 completion = client.chat.completions.create(
-                  model="meta-llama/llama-3.2-3b-instruct:free",
+                  model="google/gemini-2.5-flash:free",
                   messages=[{"role": "user", "content": full_context}]
                 )
                 ai_response = completion.choices.message.content
