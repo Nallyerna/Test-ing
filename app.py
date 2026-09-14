@@ -1,14 +1,18 @@
 import streamlit as st
 from google import genai
+import os
 import chromadb
 import uuid
 
-st.set_page_config(page_title="last", layout="centered")
-st.title("last")
+st.set_page_config(page_title="TIDUR", layout="centered")
+st.title("LAST")
 
-# 1. Grab your Google key from the safe
-API_KEY = "AQ.Ab8RN6IUt-9gjKnGMlVvh3bD69OZJp-7xVF5FjfgY6dLFJBU5Q"
-client = genai.Client(api_key=API_KEY)
+# 1. PASTE YOUR GOOGLE API KEY (THE ONE STARTING WITH AIzaSy) INSIDE THESE QUOTES!
+MY_SECRET_KEY = "AQ.Ab8RN6IUt-9gjKnGMlVvh3bD69OZJp-7xVF5FjfgY6dLFJBU5Q"
+
+# This forces your app engine to bypass all hidden system configuration screens
+os.environ["GEMINI_API_KEY"] = MY_SECRET_KEY
+client = genai.Client()
 
 # 2. Memory database
 chroma_client = chromadb.PersistentClient(path="./ai_memory_db")
@@ -28,7 +32,7 @@ AI_BACKSTORY = (
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# --- MAGIC TRICK: AI TEXTS FIRST ---
+# --- AI TEXTS FIRST ---
 if len(st.session_state.messages) == 0:
     with st.spinner("Your companion is writing to you..."):
         try:
