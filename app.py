@@ -8,7 +8,7 @@ st.title("Side Quest AI")
 
 # 1. Connect your free OpenRouter Cloud Brain
 # PASTE YOUR SECRET KEY INSIDE THE QUOTES BELOW!
-API_KEY = st.secret["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"]
+API_KEY = "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"
 
 client = OpenAI(
   base_url="https://openrouter.ai",
